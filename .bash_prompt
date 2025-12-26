@@ -1,0 +1,22 @@
+# Contents for ~/.bash_prompt
+PROMPT_COMMAND=__prompt_command
+
+__prompt_command() {
+    local EXIT="$?"
+    local CURRENT_DIR=$(basename "$PWD")
+    local CURRENT_TIME=$(date "+%H:%M:%S")
+    
+    # Replace home directory with ~
+    if [ "$PWD" = "$HOME" ]; then
+        CURRENT_DIR="~"
+    fi
+    
+    # Print a newline before showing the prompt (will appear after previous command output)
+    echo ""
+    
+    if [ $EXIT -eq 0 ]; then
+        PS1="\[\e[0m\]${CURRENT_TIME} ${CURRENT_DIR}\[\e[32m\] →\[\e[0m\] "  # Green arrow for success
+    else
+        PS1="\[\e[0m\]${CURRENT_TIME} ${CURRENT_DIR}\[\e[31m\] →\[\e[0m\] "  # Red arrow for failure
+    fi
+}
